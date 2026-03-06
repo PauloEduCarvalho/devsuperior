@@ -2,10 +2,14 @@ package com.devsuperior.CrudClient.dto;
 
 import java.time.LocalDate;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.devsuperior.CrudClient.entities.Client;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Positive;
 
 public class ClientDTO {
     
@@ -14,14 +18,22 @@ public class ClientDTO {
     @NotBlank(message = "Campo obrigatório")
     private String name;
 
+    @NotBlank(message = "Campo obrigatório")
+    @CPF(message = "CPF inválido")
     private String cpf;
 
+    @NotNull(message = "Renda é obrigatória")
+    @Positive(message = "Renda deve ser positiva")
     private Double income;
 
     @PastOrPresent(message = "A data de nascimento não pode ser futura")
     private LocalDate birthDate;
     
+    @NotNull(message = "Quantidade de filhos é obrigatória")
     private Integer children;
+
+    public ClientDTO() {
+    }
 
     public ClientDTO(Long id, String name, String cpf, Double income, LocalDate birthDate, Integer children) {
         this.id = id;

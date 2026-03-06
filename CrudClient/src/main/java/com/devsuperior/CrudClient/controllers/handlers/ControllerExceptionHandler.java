@@ -9,10 +9,10 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.devsuperior.CrudClient.servicies.exceptions.DatabaseException;
-import com.devsuperior.CrudClient.servicies.exceptions.ResourcesNotFoundException;
 import com.devsuperior.CrudClient.dto.CustomError;
 import com.devsuperior.CrudClient.dto.ValidationError;
+import com.devsuperior.CrudClient.servicies.exceptions.DatabaseException;
+import com.devsuperior.CrudClient.servicies.exceptions.ResourcesNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
 

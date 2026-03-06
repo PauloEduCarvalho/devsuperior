@@ -14,6 +14,8 @@ import com.devsuperior.CrudClient.repositories.ClientRepository;
 import com.devsuperior.CrudClient.servicies.exceptions.DatabaseException;
 import com.devsuperior.CrudClient.servicies.exceptions.ResourcesNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class ClientService {
 
@@ -35,10 +37,15 @@ public class ClientService {
 
     @Transactional
     public ClientDTO insert(ClientDTO dto) {
-        Client entity = new Client();
-        copyDtoToEntity(dto, entity);
-        entity = repository.save(entity);
-        return new ClientDTO(entity);
+        try{
+            Client entity = new Client();
+            copyDtoToEntity(dto, entity);
+            entity = repository.save(entity);
+            return new ClientDTO(entity);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("CPF já cadastrado");
+        }
+        
     }
 
     @Transactional
@@ -49,6 +56,8 @@ public class ClientService {
             entity = repository.save(entity);
             return new ClientDTO(entity);
         } catch (ResourcesNotFoundException e) {
+            throw new ResourcesNotFoundException("Client not found");
+        }catch (EntityNotFoundException e) {
             throw new ResourcesNotFoundException("Client not found");
         }
     }
